@@ -4,138 +4,171 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MSP Overlay – Types of Use (EN)</title>
- <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html, body {
-    width: 100%;
-    height: 100%;
-    font-family: 'Avenir Next', 'Avenir Next World', sans-serif;
-    background: transparent; /* ← key fix */
-  }
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  .container {
-    position: relative;
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
+    /* OPTION A: fully transparent background */
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Avenir Next', 'Avenir Next World', sans-serif;
+      background: transparent;
+    }
 
-  .container img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
 
-  .hotspot {
-    position: absolute;
-    width: 160px;
-    height: 160px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    z-index: 5;
-  }
+    .container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
-  .tooltip {
-    display: none;
-    position: absolute;
-    max-width: 380px;
-    background-color: #6c8cc4;
-    color: white;
-    padding: 14px;
-    border-radius: 12px;
-    font-size: 15px;
-    line-height: 1.35;
-    z-index: 10;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  }
+    /* ---- Hotspots ----
+       Requirement: >= 2 cm radius around each point.
+       2 cm ≈ 75.6 px at 96 dpi → diameter ≈ 151 px.
+       Using 160 px diameter for safety. */
+    .hotspot {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: 5;
 
-  .hotspot:hover + .tooltip { display: block; }
-  .tooltip.active { display: block; }
+      /* Debug helper (optional)
+      background: rgba(255,255,255,0.12);
+      outline: 2px dashed rgba(255,255,255,0.4);
+      */
+    }
 
-  .tooltip.offset {
-    transform: translate(18px, 18px);
-  }
+    .tooltip {
+      display: none;
+      position: absolute;
+      max-width: 380px;
+      background-color: #6c8cc4;
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      line-height: 1.35;
+      z-index: 10;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    }
 
-  @media (hover: none) {
-    .hotspot:hover + .tooltip { display: none; }
-  }
-</style>
-  
+    /* Desktop hover */
+    .hotspot:hover + .tooltip {
+      display: block;
+    }
+
+    /* Mobile / touch */
+    .tooltip.active {
+      display: block;
+    }
+
+    /* Tooltip offset from hotspot centre */
+    .tooltip.offset {
+      transform: translate(18px, 18px);
+    }
+
+    /* Disable hover behaviour on touch-only devices */
+    @media (hover: none) {
+      .hotspot:hover + .tooltip {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
   <div class="container" id="container">
-    <!-- Update the path if needed -->
-    <img src="./uses-kind/uses-eng-exp.png" alt="Types of use – revised (EN)">
+
+    <!-- IMAGE PATH: adjust if needed -->
+    <img src="./uses-kind/uses-eng-exp.png"
+         alt="Types of use – revised (EN)">
 
     <!-- G – Generic Use -->
     <button class="hotspot"
             style="left: 30.369%; top: 30.380%;"
             aria-label="Generic Use"></button>
-    <div class="tooltip offset" style="left: 30.369%; top: 30.380%;">
+    <div class="tooltip offset"
+         style="left: 30.369%; top: 30.380%;">
       <strong>G – Generic Use</strong><br>
-      Areas where, in principle, all uses are allowed, subject to specific and reciprocal regulation mechanisms
-      defined or to be defined within national and international regulations or sectoral plans, in order to ensure
-      safety, reduce and control environmental impacts, and promote coexistence among uses.
+      Areas where, in principle, all uses are allowed, subject to specific and reciprocal
+      regulation mechanisms defined or to be defined within national and international
+      regulations or sectoral plans, in order to ensure safety, reduce and control
+      environmental impacts, and promote coexistence among uses.
     </div>
 
     <!-- R – Reserved Use -->
     <button class="hotspot"
             style="left: 76.770%; top: 30.603%;"
             aria-label="Reserved Use"></button>
-    <div class="tooltip offset" style="left: 76.770%; top: 30.603%;">
+    <div class="tooltip offset"
+         style="left: 76.770%; top: 30.603%;">
       <strong>R – Reserved Use</strong><br>
-      Areas reserved for a specific use. Other uses are permitted exclusively to meet the needs of the reserved use,
-      or subject to exemptions and authorisations granted by the authority responsible for, or managing, the reserved use.
+      Areas reserved for a specific use. Other uses are permitted exclusively to meet
+      the needs of the reserved use, or subject to exemptions and authorisations granted
+      by the authority responsible for, or managing, the reserved use.
     </div>
 
     <!-- L – Limited Use -->
     <button class="hotspot"
             style="left: 25.953%; top: 81.683%;"
             aria-label="Limited Use"></button>
-    <div class="tooltip offset" style="left: 25.953%; top: 81.683%;">
+    <div class="tooltip offset"
+         style="left: 25.953%; top: 81.683%;">
       <strong>L – Limited Use</strong><br>
-      Areas for which a prevailing use is identified, with other uses that may be present, with or without specific
-      limitations, provided that they are compatible with the prevailing use.
+      Areas for which a prevailing use is identified, with other uses that may be present,
+      with or without specific limitations, provided that they are compatible with the
+      prevailing use.
     </div>
 
     <!-- P – Priority Use -->
     <button class="hotspot"
             style="left: 77.072%; top: 80.268%;"
             aria-label="Priority Use"></button>
-    <div class="tooltip offset" style="left: 77.072%; top: 80.268%;">
+    <div class="tooltip offset"
+         style="left: 77.072%; top: 80.268%;">
       <strong>P – Priority Use</strong><br>
-      Areas for which the Plan provides indications on priority use and development, also identifying other uses to be
-      safeguarded or allowed through reciprocal regulation with the identified priority use.
+      Areas for which the Plan provides indications on priority use and development,
+      also identifying other uses to be safeguarded or allowed through reciprocal
+      regulation with the identified priority use.
     </div>
+
   </div>
 
   <script>
-    // Tap/click support: toggle the tooltip that follows the hotspot
+    /* Tap / click support (StoryMap-safe) */
     const container = document.getElementById('container');
     const hotspots = container.querySelectorAll('.hotspot');
 
-    function closeAll() {
-      container.querySelectorAll('.tooltip.active').forEach(t => t.classList.remove('active'));
+    function closeAllTooltips() {
+      container.querySelectorAll('.tooltip.active')
+        .forEach(t => t.classList.remove('active'));
     }
 
     hotspots.forEach(h => {
       h.addEventListener('click', (e) => {
         e.stopPropagation();
-        const tip = h.nextElementSibling;
-        const open = tip.classList.contains('active');
-        closeAll();
-        if (!open) tip.classList.add('active');
+        const tooltip = h.nextElementSibling;
+        const isOpen = tooltip.classList.contains('active');
+        closeAllTooltips();
+        if (!isOpen) tooltip.classList.add('active');
       });
     });
 
-    document.addEventListener('click', closeAll);
+    document.addEventListener('click', closeAllTooltips);
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeAll();
+      if (e.key === 'Escape') closeAllTooltips();
     });
   </script>
 </body>
