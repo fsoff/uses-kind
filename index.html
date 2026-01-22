@@ -3,197 +3,152 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Overlay – Types of Use (Revised)</title>
-
+  <title>MSP Overlay – Types of Use (EN)</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html, body {
       width: 100%;
       height: 100%;
       font-family: 'Avenir Next', 'Avenir Next World', sans-serif;
-      overflow-x: hidden;
-      background: #000; /* optional */
+      background: #000;
     }
 
-    /* Responsive container with a max width to match your original reference */
     .container {
       position: relative;
       width: 100%;
-      max-width: 1400px;   /* you can adjust */
+      max-width: 1600px;
       margin: 0 auto;
     }
 
     .container img {
-      display: block;
       width: 100%;
       height: auto;
+      display: block;
     }
 
-    /* Overlay layer always matches the image size */
-    .overlay {
-      position: absolute;
-      inset: 0;            /* top:0 right:0 bottom:0 left:0 */
-      width: 100%;
-      height: 100%;
-    }
-
+    /* ---- Hotspots ----
+       Requirement: >= 2 cm radius around each point.
+       2 cm ≈ 75.6 px at 96 dpi, so diameter ≈ 151 px.
+       We use 160px diameter to be safely >= 2 cm radius. */
     .hotspot {
       position: absolute;
-      width: 120px;
-      height: 120px;
+      width: 160px;
+      height: 160px;
       border: none;
       background: transparent;
       cursor: pointer;
       transform: translate(-50%, -50%);
+      border-radius: 50%;
       z-index: 5;
 
-      /* Debug helper (optional):
-      background: rgba(255,0,0,0.15);
-      border-radius: 50%;
+      /* Optional debug (uncomment to see clickable areas)
+      background: rgba(255, 255, 255, 0.10);
+      outline: 2px dashed rgba(255,255,255,0.35);
       */
     }
 
     .tooltip {
       display: none;
       position: absolute;
-      max-width: 360px;
+      max-width: 380px;
       background-color: #6c8cc4;
       color: white;
       padding: 14px;
       border-radius: 12px;
       font-size: 15px;
+      line-height: 1.35;
       z-index: 10;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
     }
 
-    /* Hover (desktop) */
-    .hotspot:hover + .tooltip {
-      display: block;
+    /* Desktop hover */
+    .hotspot:hover + .tooltip { display: block; }
+
+    /* Mobile / tap */
+    .tooltip.active { display: block; }
+
+    /* Tooltip placement: anchored near the hotspot, then offset */
+    .tooltip.offset {
+      transform: translate(18px, 18px);
     }
 
-    /* Click/tap (mobile + embeds) */
-    .tooltip.active {
-      display: block;
+    /* Improve tap behaviour */
+    @media (hover: none) {
+      .hotspot:hover + .tooltip { display: none; }
     }
   </style>
 </head>
 
 <body>
   <div class="container" id="container">
-    <img id="baseImage" src="./uses-kind/uses-eng-exp.png" alt="Revised types of use">
+    <!-- Update the path if needed -->
+    <img src="./uses-kind/uses-eng-exp.png" alt="Types of use – revised (EN)">
 
-    <!-- Overlay layer -->
-    <div class="overlay" id="overlay">
+    <!-- G – Generic Use -->
+    <button class="hotspot"
+            style="left: 30.369%; top: 30.380%;"
+            aria-label="Generic Use"></button>
+    <div class="tooltip offset" style="left: 30.369%; top: 30.380%;">
+      <strong>G – Generic Use</strong><br>
+      Areas where, in principle, all uses are allowed, subject to specific and reciprocal regulation mechanisms
+      defined or to be defined within national and international regulations or sectoral plans, in order to ensure
+      safety, reduce and control environmental impacts, and promote coexistence among uses.
+    </div>
 
-      <!-- NOTE:
-        The original hotspot coordinates were in pixels.
-        We keep your pixel values, but convert them to % dynamically,
-        based on the image’s natural dimensions at runtime.
-      -->
+    <!-- R – Reserved Use -->
+    <button class="hotspot"
+            style="left: 76.770%; top: 30.603%;"
+            aria-label="Reserved Use"></button>
+    <div class="tooltip offset" style="left: 76.770%; top: 30.603%;">
+      <strong>R – Reserved Use</strong><br>
+      Areas reserved for a specific use. Other uses are permitted exclusively to meet the needs of the reserved use,
+      or subject to exemptions and authorisations granted by the authority responsible for, or managing, the reserved use.
+    </div>
 
-      <!-- G – Generic Use -->
-      <button class="hotspot" data-left="357" data-top="339" aria-label="Generic Use"></button>
-      <div class="tooltip" data-left="357" data-top="439">
-        <strong>G – Generic Use</strong><br>
-        Areas where, in principle, all uses are allowed, subject to specific and reciprocal regulation mechanisms defined or to be defined within national and international regulations or sectoral plans, in order to ensure safety, reduce and control environmental impacts, and promote coexistence among uses.
-      </div>
+    <!-- L – Limited Use -->
+    <button class="hotspot"
+            style="left: 25.953%; top: 81.683%;"
+            aria-label="Limited Use"></button>
+    <div class="tooltip offset" style="left: 25.953%; top: 81.683%;">
+      <strong>L – Limited Use</strong><br>
+      Areas for which a prevailing use is identified, with other uses that may be present, with or without specific
+      limitations, provided that they are compatible with the prevailing use.
+    </div>
 
-      <!-- R – Reserved Use -->
-      <button class="hotspot" data-left="1021" data-top="896" aria-label="Reserved Use"></button>
-      <div class="tooltip" data-left="721" data-top="796">
-        <strong>R – Reserved Use</strong><br>
-        Areas reserved for a specific use. Other uses are permitted exclusively to meet the needs of the reserved use, or subject to exemptions and authorisations granted by the authority responsible for, or managing, the reserved use.
-      </div>
-
-      <!-- P – Priority Use -->
-      <button class="hotspot" data-left="1009" data-top="334" aria-label="Priority Use"></button>
-      <div class="tooltip" data-left="649" data-top="334">
-        <strong>P – Priority Use</strong><br>
-        Areas for which the Plan provides indications on priority use and development, also identifying other uses to be safeguarded or allowed through reciprocal regulation with the identified priority use.
-      </div>
-
-      <!-- L – Limited Use -->
-      <button class="hotspot" data-left="312" data-top="911" aria-label="Limited Use"></button>
-      <div class="tooltip" data-left="312" data-top="811">
-        <strong>L – Limited Use</strong><br>
-        Areas for which a prevailing use is identified, with other uses that may be present, with or without specific limitations, provided that they are compatible with the prevailing use.
-      </div>
-
+    <!-- P – Priority Use -->
+    <button class="hotspot"
+            style="left: 77.072%; top: 80.268%;"
+            aria-label="Priority Use"></button>
+    <div class="tooltip offset" style="left: 77.072%; top: 80.268%;">
+      <strong>P – Priority Use</strong><br>
+      Areas for which the Plan provides indications on priority use and development, also identifying other uses to be
+      safeguarded or allowed through reciprocal regulation with the identified priority use.
     </div>
   </div>
 
   <script>
-    const img = document.getElementById('baseImage');
-    const overlay = document.getElementById('overlay');
+    // Tap/click support: toggle the tooltip that follows the hotspot
+    const container = document.getElementById('container');
+    const hotspots = container.querySelectorAll('.hotspot');
 
-    // Convert pixel coordinates (based on original image) into responsive % positions
-    function positionElements() {
-      const natW = img.naturalWidth;
-      const natH = img.naturalHeight;
-
-      if (!natW || !natH) return;
-
-      // Position hotspots
-      overlay.querySelectorAll('.hotspot').forEach(el => {
-        const leftPx = parseFloat(el.dataset.left);
-        const topPx  = parseFloat(el.dataset.top);
-        el.style.left = (leftPx / natW * 100) + '%';
-        el.style.top  = (topPx  / natH * 100) + '%';
-      });
-
-      // Position tooltips
-      overlay.querySelectorAll('.tooltip').forEach(el => {
-        const leftPx = parseFloat(el.dataset.left);
-        const topPx  = parseFloat(el.dataset.top);
-        el.style.left = (leftPx / natW * 100) + '%';
-        el.style.top  = (topPx  / natH * 100) + '%';
-      });
+    function closeAll() {
+      container.querySelectorAll('.tooltip.active').forEach(t => t.classList.remove('active'));
     }
 
-    // Click/tap support: toggle tooltip next to hotspot
-    function closeAllTooltips() {
-      overlay.querySelectorAll('.tooltip.active').forEach(t => t.classList.remove('active'));
-    }
-
-    function enableClickTooltips() {
-      const hotspots = overlay.querySelectorAll('.hotspot');
-
-      hotspots.forEach(hs => {
-        hs.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const tip = hs.nextElementSibling;
-          const isOpen = tip.classList.contains('active');
-          closeAllTooltips();
-          if (!isOpen) tip.classList.add('active');
-        });
+    hotspots.forEach(h => {
+      h.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const tip = h.nextElementSibling;
+        const open = tip.classList.contains('active');
+        closeAll();
+        if (!open) tip.classList.add('active');
       });
-
-      // Click outside closes
-      document.addEventListener('click', closeAllTooltips);
-
-      // ESC closes (desktop)
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeAllTooltips();
-      });
-    }
-
-    // Ensure positions are calculated once image is loaded
-    img.addEventListener('load', () => {
-      positionElements();
-      enableClickTooltips();
     });
 
-    // Recalculate on resize (responsive)
-    window.addEventListener('resize', () => {
-      positionElements();
+    document.addEventListener('click', closeAll);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAll();
     });
-
-    // If cached and already complete
-    if (img.complete) {
-      positionElements();
-      enableClickTooltips();
-    }
   </script>
 </body>
 </html>
