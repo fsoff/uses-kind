@@ -4,79 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MSP Overlay – Types of Use (EN)</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%;
-      height: 100%;
-      font-family: 'Avenir Next', 'Avenir Next World', sans-serif;
-      background: #000;
-    }
+ <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .container {
-      position: relative;
-      width: 100%;
-      max-width: 1600px;
-      margin: 0 auto;
-    }
+  html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Avenir Next', 'Avenir Next World', sans-serif;
+    background: transparent; /* ← key fix */
+  }
 
-    .container img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+  .container {
+    position: relative;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
 
-    /* ---- Hotspots ----
-       Requirement: >= 2 cm radius around each point.
-       2 cm ≈ 75.6 px at 96 dpi, so diameter ≈ 151 px.
-       We use 160px diameter to be safely >= 2 cm radius. */
-    .hotspot {
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      z-index: 5;
+  .container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 
-      /* Optional debug (uncomment to see clickable areas)
-      background: rgba(255, 255, 255, 0.10);
-      outline: 2px dashed rgba(255,255,255,0.35);
-      */
-    }
+  .hotspot {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 5;
+  }
 
-    .tooltip {
-      display: none;
-      position: absolute;
-      max-width: 380px;
-      background-color: #6c8cc4;
-      color: white;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 15px;
-      line-height: 1.35;
-      z-index: 10;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-    }
+  .tooltip {
+    display: none;
+    position: absolute;
+    max-width: 380px;
+    background-color: #6c8cc4;
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    line-height: 1.35;
+    z-index: 10;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  }
 
-    /* Desktop hover */
-    .hotspot:hover + .tooltip { display: block; }
+  .hotspot:hover + .tooltip { display: block; }
+  .tooltip.active { display: block; }
 
-    /* Mobile / tap */
-    .tooltip.active { display: block; }
+  .tooltip.offset {
+    transform: translate(18px, 18px);
+  }
 
-    /* Tooltip placement: anchored near the hotspot, then offset */
-    .tooltip.offset {
-      transform: translate(18px, 18px);
-    }
-
-    /* Improve tap behaviour */
-    @media (hover: none) {
-      .hotspot:hover + .tooltip { display: none; }
-    }
-  </style>
+  @media (hover: none) {
+    .hotspot:hover + .tooltip { display: none; }
+  }
+</style>
+  
 </head>
 
 <body>
